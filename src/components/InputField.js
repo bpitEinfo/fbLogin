@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity,TextInput } from "react-native";
 
-export default function InputField({ label, icons, inputType, keyboardType, fieldButtonLabel, fieldButtonFunction }) {
+export default function InputField({ label,labelValue, icons, inputType, keyboardType, fieldButtonLabel, fieldButtonFunction,...rest}) {
     return (
 
 
@@ -19,10 +19,14 @@ export default function InputField({ label, icons, inputType, keyboardType, fiel
                     placeholder="Password"
                     keyboardType={keyboardType}
                     secureTextEntry={true}
+                    value={labelValue}
+                    {...rest}
                 />) : (<TextInput
                     style={{ backgroundColor: '#ccd', paddingVertical: 1, flex: 1 }}
                     placeholder={label}
+                    value={labelValue}
                     keyboardType={keyboardType}
+                    {...rest}
                 />)
             }
             <TouchableOpacity onPress={fieldButtonFunction}>

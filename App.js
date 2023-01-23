@@ -15,8 +15,16 @@ import auth  from '@react-native-firebase/auth';
 const Stack= createNativeStackNavigator();
 const App = () =>{
 
-// const {user,setUser} = useState();
-// const [initializing,setinitializing] = useState(true);
+const [user,setUser] = useState();
+const [initializing,setinitializing] = useState(true);
+function onAuthStateChanged(user){
+  setUser(user);
+  if(initializing) setinitializing(false);
+}
+useEffect(()=>{
+  const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+  return subscriber;
+},[]);
 // const onAuthStateChanged=(user)=>{
 // setUser(user);
 // if(initializing)setinitializing(false);
@@ -26,16 +34,18 @@ const App = () =>{
 //   return subscriber; // unsubscribe on unmount
 // }, []);
 
-// if(initializing) return null;
+if(initializing) return null;
 return(
 
  
  <NavigationContainer>
-  {/* {user ? <AppStack/> : <AuthStack/>} */}
+   {/* {user ? <AppStack/> : <AuthStack/>}  */}
+   {user ?<AuthStack/>:<AppStack/>} 
   {/* LoginScreen */}
-  <AuthStack/> 
+  {/* <AuthStack/>  */}
  {/* //HomeScreen */}
    {/* <AppStack/>  */}
+
  </NavigationContainer>
 )
 }
