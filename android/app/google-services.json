@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "871147521173",
+    "project_id": "bpite-7a18a",
+    "storage_bucket": "bpite-7a18a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871147521173:android:7ba7a7f1041af110c3c79c",
+        "android_client_info": {
+          "package_name": "com.fblogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871147521173-6hfk8h2jsmbrdi13n86f8h9lsdc2m7tb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf3iywxnBs6v55kvqc9e9htYSsw8jP014"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871147521173-6hfk8h2jsmbrdi13n86f8h9lsdc2m7tb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
