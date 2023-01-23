@@ -35,18 +35,21 @@ useEffect(()=>{
 // }, []);
 
 if(initializing) return null;
+if(!user)
 return(
+<AppStack/>
+)
+return (
+  <AuthStack/>
+//  <NavigationContainer>
+  //  {/* {user ? <AppStack/> : <AuthStack/>}  */}
+  //  {/* {user ?<AuthStack/>:<AppStack}  */}
+  // {/* LoginScreen */}
+  // {/* <AuthStack/>  */}
+//  {/* //HomeScreen */}
+  //  {/* <AppStack/>  */}
 
- 
- <NavigationContainer>
-   {/* {user ? <AppStack/> : <AuthStack/>}  */}
-   {user ?<AuthStack/>:<AppStack/>} 
-  {/* LoginScreen */}
-  {/* <AuthStack/>  */}
- {/* //HomeScreen */}
-   {/* <AppStack/>  */}
-
- </NavigationContainer>
+//  {/* //</NavigationContainer> */}
 )
 }
 
@@ -58,4 +61,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+export default ()=>{
+  return(
+    <NavigationContainer>
+      <App/>
+    </NavigationContainer>
+  )
+};
