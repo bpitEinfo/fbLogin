@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { Button, View, Text, Switch, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { Button, View, Text, Switch, StyleSheet, Share,TouchableOpacity,Alert } from 'react-native';
 import { Surface } from 'react-native-paper';
 import Colors from '../Constants/Colors';
 import Rate ,{AndroidMarket} from 'react-native-rate';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import AppHeader from '../components/AppHeader';
+import { color } from 'react-native-reanimated';
+import auth from "@react-native-firebase/auth";
 
 //import Share from 'react-native-share';
 const Setting = (props) => {
@@ -31,6 +33,46 @@ const Setting = (props) => {
             subject: 'Share App'
         });
     }
+    // For logout function
+    const [user, setUser] = useState();
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged((user) => {
+      console.log("user", JSON.stringify(user));
+      setUser(user);
+    });
+
+    return subscriber;
+  }, []);
+    const logout = () => {
+        Alert.alert(
+          "Logout",
+          "Are you sure? You want to logout?",
+          [
+            {
+              text: "Cancel",
+              onPress: () => {
+                return null;
+              },
+            },
+            {
+              text: "Confirm",
+              onPress: () => {
+                auth()
+                  .signOut()
+                  .then(() => navigation.navigate("Auth"))
+                  .catch((error) => {
+                    console.log(error);
+                    if (error.code === "auth/no-current-user")
+                    navigation.navigate("Auth");
+                    else alert(error);
+                  });
+              },
+            },
+          ],
+          { cancelable: false }
+        );
+      };
     return (
 
         <View>
@@ -73,6 +115,7 @@ const Setting = (props) => {
                 </TouchableOpacity>
                 <DrawerItem style={{ paddingTop: 300 }}
                     label="Logout"
+                    onPress={logout}
                     icon={({ size, color }) => (
                         <MaterialIcons name="logout" size={size} color={color} />
 
@@ -98,7 +141,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     text: {
-        marginVertical: 15
+        marginVertical: 15,
+        marginLeft:15,
+        color:"black"
     },
 
     buttonStyle: {

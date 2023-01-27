@@ -1,92 +1,211 @@
-import React, { useContext,useState } from "react";
-import { Text, View, SafeAreaView, Touchable, TouchableOpacity } from "react-native";
-import RegisterationSVG from '../Image/misc/registration.svg';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { TextInput } from "react-native-gesture-handler";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import InputField from "../components/InputField";
-import Custombutton from "../components/Custombutton";
-import auth from '@react-native-firebase/auth'
+// #6 Email Authentication using Firebase Authentication in React Native App
+// https://aboutreact.com/react-native-firebase-authentication/
+
+// Import React and Component
+import React, { useState, createRef } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+
+import auth from "@react-native-firebase/auth";
 
 const RegisterScreen = ({ navigation }) => {
-const[email,setEmail] =useState();
-const [password,setPassword] = useState();
-const Register=()=>{
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [errortext, setErrortext] = useState("");
+
+  const emailInputRef = createRef();
+  const passwordInputRef = createRef();
+
+  const handleSubmitButton = () => {
+    setErrortext("");
+    if (!userName) return alert("Please fill Name");
+    if (!userEmail) return alert("Please fill Email");
+    if (!userPassword) return alert("Please fill Address");
+
     auth()
-    .createUserWithEmailAndPassword(email,password)
-    .then(() => {
-      console.log('User account created & signed in!');
-    })
-    .catch(error => {
-      if (error.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
-  
-      if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
-  
-      console.error(error);
-    });
-}
-return (
-        <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ paddingHorizontal: 25 }}>
-                <View style={{ alignItems: 'center' }}>
-                    <RegisterationSVG height={300} width={300} style={{ transform: [{ rotate: '-5deg' }] }} />
-                </View>
-                <Text style={{ fontSize: 28, fontWeight: '500', color: "black" }}>Register</Text>
-                <View style={{
-                    flexDirection: 'row',
-                    borderBottomColor: '#ccc',
-                    borderBottomWidth: 1,
-                    paddingBottom: 8,
-                    marginBottom: 25
-                }}>
+      .createUserWithEmailAndPassword(
+        userEmail,
+        userPassword
+      )
+      .then((user) => {
+        console.log(
+          "Registration Successful. Please Login to proceed"
+        );
+        console.log(user);
+        if (user) {
+          auth()
+            .currentUser.updateProfile({
+              displayName: userName,
+              photoURL:
+                "https://aboutreact.com/profile.png",
+            })
+            .then(() => navigation.navigate("Appstack"))
+            .catch((error) => {
+              alert(error);
+              console.error(error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.code === "auth/email-already-in-use") {
+          setErrortext(
+            "That email address is already in use!"
+          );
+        } else {
+          setErrortext(error.message);
+        }
+      });
+  };
 
-                </View>
-
-               
-                <InputField label={'Email Address'}  
-                 onChangeText={(userEmail) => setEmail(userEmail)}   
-                 labelValue={email}         
-                    icons={
-                        <MaterialIcons name='alternate-email' size={20} color='#666' style={{
-                            marginRight: 5
-                        }} />
-                    }
-                    keyboardType="email-address"  
-                      
-                />
-                <InputField label={'Enter PassWord'}
-                                onChangeText={(userPassord) => setPassword(userPassord)}
-                labelValue={password}
-                    icons={
-                        <Ionicons name='ios-lock-closed-outline' size={20} color='#666' style={{
-                            marginRight: 5
-                        }} />
-                    }
-                    inputType="password"
-                />
-
-                <View style={{
-                    flexDirection: 'row',
-                    borderBottomColor: '#ccc',
-                    borderBottomWidth: 1,
-                    paddingBottom: 8,
-                    marginBottom: 25
-                }}>
-                </View>
-                <Custombutton label={"Register"} onPress={() => Register(email,password)}/>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 30 }}>
-                    <Text style={{ color: 'blue' }}>Already Register?    </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                        <Text style={{ color: '#AD40AF', fontWeight: '700' }}>Login</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </SafeAreaView>
-    )
-}
-
+  return (
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: "#307ecc" }}
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+      >
+        <View style={{ alignItems: "center" }}>
+          <Image
+            source={require("../Image/Bpitqrlogo.png")}
+            style={{
+              width: "50%",
+              height: 100,
+              resizeMode: "contain",
+              margin: 30,
+            }}
+          />
+        </View>
+        <KeyboardAvoidingView enabled>
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(UserName) =>
+                setUserName(UserName)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="Enter Name"
+              placeholderTextColor="#8b9cb5"
+              autoCapitalize="sentences"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                emailInputRef.current &&
+                emailInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(UserEmail) =>
+                setUserEmail(UserEmail)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="Enter Email"
+              placeholderTextColor="#8b9cb5"
+              keyboardType="email-address"
+              ref={emailInputRef}
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current &&
+                passwordInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(UserPassword) =>
+                setUserPassword(UserPassword)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="Enter Password"
+              placeholderTextColor="#8b9cb5"
+              ref={passwordInputRef}
+              returnKeyType="next"
+              secureTextEntry={true}
+              onSubmitEditing={Keyboard.dismiss}
+              blurOnSubmit={false}
+            />
+          </View>
+          {errortext != "" ? (
+            <Text style={styles.errorTextStyle}>
+              {" "}
+              {errortext}{" "}
+            </Text>
+          ) : null}
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={handleSubmitButton}
+          >
+            <Text style={styles.buttonTextStyle}>
+              REGISTER
+            </Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 export default RegisterScreen;
+
+const styles = StyleSheet.create({
+  sectionStyle: {
+    flexDirection: "row",
+    height: 40,
+    marginTop: 20,
+    marginLeft: 35,
+    marginRight: 35,
+    margin: 10,
+  },
+  buttonStyle: {
+    backgroundColor: "#7DE24E",
+    borderWidth: 0,
+    color: "#FFFFFF",
+    borderColor: "#7DE24E",
+    height: 40,
+    alignItems: "center",
+    borderRadius: 30,
+    marginLeft: 35,
+    marginRight: 35,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  buttonTextStyle: {
+    color: "#FFFFFF",
+    paddingVertical: 10,
+    fontSize: 16,
+  },
+  inputStyle: {
+    flex: 1,
+    color: "white",
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: "#dadae8",
+  },
+  errorTextStyle: {
+    color: "red",
+    textAlign: "center",
+    fontSize: 14,
+  },
+});

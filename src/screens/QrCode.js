@@ -121,9 +121,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    color:"black",
+    marginBottom:10
   },
   textStyle: {
     textAlign: 'center',
+    color:"black"
+
   },
   textInputStyle: {
     flexDirection: 'row',
@@ -132,6 +136,8 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     marginRight: 35,
     margin: 10,
+    color:"black"
+
   },
   buttonStyle: {
     backgroundColor: '#51D8C7',
@@ -142,6 +148,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 30,
     padding: 10,
+    color:"black"
+,
     margin: 20,
 
   },

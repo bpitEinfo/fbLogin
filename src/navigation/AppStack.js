@@ -8,6 +8,8 @@ import PrivacyScreen from "../screens/PrivacyScreen";
 import SettingScreen from "../screens/SettingScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import CustomDrawer from "../components/CustomDrawer";
+import SimpleLineIcons
+from 'react-native-vector-icons/SimpleLineIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Feather from 'react-native-vector-icons/Feather'
@@ -51,10 +53,10 @@ const AppStack = () => {
 
       drawerContent={(props) => <CustomDrawer {...props} />}
     >
-      <Drawer.Screen name="Home" component={Home}
+      <Drawer.Screen name="Home" component={HomeScreen}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Feather name="home" color={color} size={size} />
+            <MaterialIcons name="home" color={color} size={size} />
 
           )
         }}
@@ -62,14 +64,15 @@ const AppStack = () => {
       <Drawer.Screen name="Profile" component={Profile}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Feather name="user" color={color} size={size} />
+            <MaterialIcons
+            name="verified-user" color={color} size={size} />
 
           )
         }} />
       <Drawer.Screen name="Setting" component={Setting}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Feather name="settings" color={color} size={size} />
+            < MaterialIcons name="settings" color={color} size={size} />
           )
         }}
       />
@@ -86,7 +89,7 @@ const AppStack = () => {
       <Drawer.Screen name="Qr Code" component={QrCode}
         options={{
           drawerIcon: ({ color, size }) => (
-            <FontAwesome5 name="qrcode" color={color} size={size} />
+            <MaterialCommunityIcons name="qrcode-edit" color={color} size={size} />
           )
         }}
 

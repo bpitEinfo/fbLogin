@@ -28,7 +28,7 @@ const AppHeader = ({ menu, back, title, right, rightfunction, optionalIcon, opti
                     {optionalBadge && <Badge style={{ position: 'absolute', top: -1, right: -1, }} >{optionalBadge}</Badge>}
                 </TouchableOpacity>} */}
                 {rightfunction && <TouchableOpacity onPress={rightfunction}>
-                    <Feather name={right} size={IconSize} color={IconColor} />
+                    <Feather name={right} size={IconSize} color={IconColor} /> 
                 </TouchableOpacity>}
             </View>
         </Surface>
@@ -39,26 +39,25 @@ export default AppHeader;
 
 const styles = StyleSheet.create({
     header: {
-        height: 55,
+        height: 60,
         elevation: 10,
         marginTop: 0,
         justifyContent: 'space-between',
         alignItem: 'center',
         flexDirection: 'row',
-        // backgroundColor: 'yellow',
     },
     view: {
         //  flex: 1.8,
         margin: 10,
         alignItem: 'center',
         flexDirection: 'row',
-        marginTop: 13,
-        padding: 3,
+        marginTop: 9,
+        padding: 1,
     },
     titleView: {
         flex: 1,
-        marginTop: 8,
-        marginLeft: '28%',
+        marginTop: 14,
+        marginLeft: '25%',
     },
     rightView: {
         justifyContent: 'flex-end',
