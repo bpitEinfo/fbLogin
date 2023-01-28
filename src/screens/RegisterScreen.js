@@ -45,11 +45,7 @@ const RegisterScreen = ({ navigation }) => {
         console.log(user);
         if (user) {
           auth()
-            .currentUser.updateProfile({
-              displayName: userName,
-              photoURL:
-                "https://aboutreact.com/profile.png",
-            })
+            
             .then(() => navigation.navigate("Appstack"))
             .catch((error) => {
               alert(error);

@@ -22,15 +22,7 @@ const AppHeader = ({ menu, back, title, right, rightfunction, optionalIcon, opti
             <View style={styles.titleView}>
                 <Title style={{ color: IconColor }}>{title}</Title>
             </View>
-            <View style={[styles.view, styles.rightView]}>
-                {/* {optionalFunc && <TouchableOpacity style={styles.rowView} onPress={optionalFunc} >
-                    <Feather name={optionalIcon} size={IconSize} color={IconColor} />
-                    {optionalBadge && <Badge style={{ position: 'absolute', top: -1, right: -1, }} >{optionalBadge}</Badge>}
-                </TouchableOpacity>} */}
-                {rightfunction && <TouchableOpacity onPress={rightfunction}>
-                    <Feather name={right} size={IconSize} color={IconColor} /> 
-                </TouchableOpacity>}
-            </View>
+            
         </Surface>
     )
 }

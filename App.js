@@ -4,7 +4,7 @@ import "react-native-gesture-handler";
 
 // Import React and Component
 import React from "react";
-import { View, Text,useWindowDimensions } from "react-native";
+import { View, Text, useWindowDimensions } from "react-native";
 // Import Navigators from React Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -17,7 +17,7 @@ import Privacy from "./src/screens/Privacy";
 import QrCode from "./src/screens/QrCode";
 //Vector icons
 import SimpleLineIcons
-from 'react-native-vector-icons/SimpleLineIcons'
+  from 'react-native-vector-icons/SimpleLineIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Feather from 'react-native-vector-icons/Feather'
@@ -28,42 +28,46 @@ import SplashScreen from "./src/screens/SplashScreen";
 import LoginScreen from "./src/screens/Loginscreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import HomeScreen from "./src/screens/HomeScreen";
+import PrivacyScreen from "./src/screens/PrivacyScreen";
+import ProfileScreen from "./src/screens/ProfileScreen";
+import EditProfileScreen from "./src/screens/EditProfileScreen";
 
 const Stack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-function AppStack () {
+function AppStack({ navigation }) {
   const dimension = useWindowDimensions();
-   const drawerType = dimension.width >= 700 ? 'permanent' : 'front';
-  
-  return (
-    
-    <Drawer.Navigator
-      screenOptions={{
-        headerShown: false
+  const drawerType = dimension.width >= 700 ? 'permanent' : 'front';
 
-      }}
+  return (
+
+    <Drawer.Navigator
       drawerStyle={{
         //backgroundColor: 'transparent',
         width: 240,
+        
       }}
       drawerType={drawerType}
       edgeWidth={100}
 
       drawerContent={(props) => <CustomDrawer {...props} />}
     >
-       <Drawer.Screen name="Home" component={HomeScreen}
+      <Drawer.Screen name="Home" component={HomeScreen}
         options={{
           drawerIcon: ({ color, size }) => (
             <MaterialIcons name="home" color={color} size={size} />
 
           )
         }}
-      /> 
-      <Drawer.Screen name="Profile" component={Profile}
-        options={{
+      />
+      <Drawer.Screen name="Profile Stack" component={ProfileStackScreen}
+     
+     options={{
+          headerShown:false,
+
           drawerIcon: ({ color, size }) => (
             <MaterialIcons
-            name="verified-user" color={color} size={size} />
+              name="verified-user" color={color} size={size} />
 
           )
         }} />
@@ -98,7 +102,7 @@ function AppStack () {
 }
 
 
-const Auth = () => {
+const Auth = ({ navigation }) => {
   // Stack Navigator for Login and Sign up Screen
   return (
     <Stack.Navigator initialRouteName="LoginScreen">
@@ -124,7 +128,54 @@ const Auth = () => {
     </Stack.Navigator>
   );
 };
+//Profile Stack
 
+const ProfileStackScreen = ({ navigation }) => {
+  // Stack Navigator for Login and Sign up Screen
+  return (
+    <ProfileStack.Navigator
+      screenOptions={
+        {
+          //headerShown: false
+        }
+      }
+    >
+
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerLeft:() =>(
+            <MaterialCommunityIcons.Button
+            name="account-edit"
+            size={26}
+            onPress={() => navigation.openDrawer()}
+            color="black"
+          />
+          ),
+          headerRight: () => (
+            <MaterialCommunityIcons.Button
+              name="account-edit"
+              size={26}
+              onPress={() => navigation.navigate('EditProfile')}
+              color="black"
+            />
+
+          )
+        }}
+
+
+      />
+      <ProfileStack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        
+
+
+      />
+    </ProfileStack.Navigator>
+  );
+};
 /* Main Navigator */
 const App = () => {
   return (
@@ -147,7 +198,7 @@ const App = () => {
           name="AppStack"
           component={AppStack}
           options={{
-            headerShown: false ,     
+            headerShown: false,
           }}
         />
       </Stack.Navigator>

@@ -96,15 +96,15 @@ const HomeScreen = ({ navigation }) => {
     <FlatList style={styles.List}
         data={data}
         keyExtractor={(item, index) => item.id + index.toString()}
-        ListHeaderComponent={
-            <AppHeader
-                title="Home" headerbg={Colors.green} IconColor={Colors.white}
-                menu titleAlight="center" optionalBadge={2} navigation={navigation}
-                // back
-                right="more-vertical" rightfunction={() => console.log('right')}
-                optionalIcon="bell" optionalFunc={() => console.log('optional')}
-            />
-        }
+        // ListHeaderComponent={
+        //     <AppHeader
+        //         title="Home" headerbg={Colors.green} IconColor={Colors.white}
+        //         menu titleAlight="center" optionalBadge={2} navigation={navigation}
+        //         // back
+        //         right="more-vertical" rightfunction={() => console.log('right')}
+        //         optionalIcon="bell" optionalFunc={() => console.log('optional')}
+        //     />
+        // }
         renderItem={({ item }) => (
             <CardItem item={item} />
         )}
