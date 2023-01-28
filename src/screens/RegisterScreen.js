@@ -39,6 +39,7 @@ const RegisterScreen = ({ navigation }) => {
         userPassword
       )
       .then((user) => {
+        alert("Registration Successful. ")
         console.log(
           "Registration Successful. Please Login to proceed"
         );
@@ -151,6 +152,7 @@ const RegisterScreen = ({ navigation }) => {
             style={styles.buttonStyle}
             activeOpacity={0.5}
             onPress={handleSubmitButton}
+            
           >
             <Text style={styles.buttonTextStyle}>
               REGISTER
