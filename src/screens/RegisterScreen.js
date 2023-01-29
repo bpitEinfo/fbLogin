@@ -19,7 +19,6 @@ import {
 import auth from "@react-native-firebase/auth";
 
 const RegisterScreen = ({ navigation }) => {
-  const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errortext, setErrortext] = useState("");
@@ -68,7 +67,7 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#307ecc" }}
+      style={{ flex: 1, backgroundColor: "black" ,paddingTop:150}}
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -79,7 +78,7 @@ const RegisterScreen = ({ navigation }) => {
       >
         <View style={{ alignItems: "center" }}>
           <Image
-            source={require("../Image/Bpitqrlogo.png")}
+            source={require("../Image/BPIT-Logo.png")}
             style={{
               width: "50%",
               height: 100,
@@ -89,24 +88,7 @@ const RegisterScreen = ({ navigation }) => {
           />
         </View>
         <KeyboardAvoidingView enabled>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(UserName) =>
-                setUserName(UserName)
-              }
-              underlineColorAndroid="#f000"
-              placeholder="Enter Name"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                emailInputRef.current &&
-                emailInputRef.current.focus()
-              }
-              blurOnSubmit={false}
-            />
-          </View>
+          
           <View style={styles.sectionStyle}>
             <TextInput
               style={styles.inputStyle}
@@ -175,7 +157,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: "#7DE24E",
+    backgroundColor: "#307ecc",
     borderWidth: 0,
     color: "#FFFFFF",
     borderColor: "#7DE24E",

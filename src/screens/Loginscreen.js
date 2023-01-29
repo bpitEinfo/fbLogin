@@ -16,7 +16,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
-import auth from "@react-native-firebase/auth";
+import auth, { firebase } from "@react-native-firebase/auth";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -38,9 +38,10 @@ const LoginScreen = ({ navigation }) => {
     auth()
       .signInWithEmailAndPassword(userEmail, userPassword)
       .then((user) => {
-        console.log(user);
+        //console.log(user);
         // If server response message same as Data Matched
-        if (user) navigation.navigate('AppStack');
+        if (user) navigation.navigate('AppStack'),
+        alert("Login Succesful")
       })
       .catch((error) => {
         console.log(error);
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
   mainBody: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#307ecc",
+    backgroundColor: "black",
     alignContent: "center",
   },
   sectionStyle: {
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyle: {
-    backgroundColor: "#7DE24E",
+    backgroundColor: "#307ecc",
     borderWidth: 0,
     color: "#FFFFFF",
     borderColor: "#7DE24E",

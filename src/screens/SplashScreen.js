@@ -29,7 +29,7 @@ const SplashScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#307ecc" }}
+      style={{ flex: 1, backgroundColor: "black" }}
     >
       <View style={styles.container}>
         <Image
