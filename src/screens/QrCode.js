@@ -1,6 +1,3 @@
-// Generation of QR Code in React Native
-// https://aboutreact.com/generation-of-qr-code-in-react-native/
-
 // import React in our code
 import React, { useState, useRef } from 'react';
 import AppHeader from '../components/AppHeader';
@@ -15,6 +12,7 @@ import {
   TextInput,
   TouchableOpacity,
   Share,
+  Image
 } from 'react-native';
 import { Surface } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
@@ -41,20 +39,15 @@ const App = (props) => {
   return (
 
     <SafeAreaView style={{ flex: 1, paddingTop: 0 }}>
-      <View>
-        <AppHeader
-          title={props.route.name} headerbg={Colors.green} IconColor={Colors.white}
-          menu titleAlight="center" optionalBadge={2} navigation={props.navigation}
-          // back
-          right="more-vertical" rightfunction={() => console.log('right')}
-          optionalIcon="bell" optionalFunc={() => console.log('optional')}
-        />
-      </View>
-      <View style={(styles.container)}>
+  
+           
+            
+    
 
         <Text style={styles.titleStyle}>
           Generation of QR Code in React Native
         </Text>
+          <View style={(styles.container)}>
         <QRCode
 
           getRef={(ref) => (myQRCode = ref)}
@@ -111,7 +104,7 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f0f8ff',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
@@ -122,7 +115,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     color:"black",
-    marginBottom:10
+    marginBottom:10,
+    backgroundColor: '#f0ffff',
   },
   textStyle: {
     textAlign: 'center',

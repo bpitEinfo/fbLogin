@@ -16,13 +16,12 @@ const AppHeader = ({ menu, back, title, right, rightfunction, optionalIcon, opti
                 </TouchableOpacity>}
                 {back && <TouchableOpacity onPress={() => navigation.goBack()} >
                     <Feather name="arrow-left" size={IconSize} color={IconColor} />
-
                 </TouchableOpacity>}
             </View>
             <View style={styles.titleView}>
                 <Title style={{ color: IconColor }}>{title}</Title>
             </View>
-            
+
         </Surface>
     )
 }

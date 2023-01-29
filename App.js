@@ -43,9 +43,8 @@ function AppStack({ navigation }) {
 
     <Drawer.Navigator
       drawerStyle={{
-        //backgroundColor: 'transparent',
-        width: 240,
-        
+        width: 30,
+
       }}
       drawerType={drawerType}
       edgeWidth={100}
@@ -61,14 +60,11 @@ function AppStack({ navigation }) {
         }}
       />
       <Drawer.Screen name="Profile Stack" component={ProfileStackScreen}
-     
-     options={{
-          headerShown:false,
-
+        options={{
+          headerShown: false,
           drawerIcon: ({ color, size }) => (
             <MaterialIcons
               name="verified-user" color={color} size={size} />
-
           )
         }} />
       <Drawer.Screen name="Setting" component={Setting}
@@ -90,6 +86,7 @@ function AppStack({ navigation }) {
 
       <Drawer.Screen name="Qr Code" component={QrCode}
         options={{
+          
           drawerIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="qrcode-edit" color={color} size={size} />
           )
@@ -115,7 +112,7 @@ const Auth = ({ navigation }) => {
         name="RegisterScreen"
         component={RegisterScreen}
         options={{
-         headerShown:false
+          headerShown: false
         }}
       />
     </Stack.Navigator>
@@ -132,24 +129,28 @@ const ProfileStackScreen = ({ navigation }) => {
           //headerShown: false
         }
       }
+      
     >
 
       <ProfileStack.Screen
         name="Profile"
         component={ProfileScreen}
+       
         options={{
-          headerLeft:() =>(
-            <MaterialCommunityIcons.Button
-            name="account-edit"
-            size={26}
-            onPress={() => navigation.openDrawer()}
-            color="black"
-          />
+          headerLeft: () => (
+            
+            <MaterialIcons
+              name="menu"
+              size={30}
+              onPress={() => navigation.openDrawer()}
+              color="black"
+            />
+          
           ),
           headerRight: () => (
-            <MaterialCommunityIcons.Button
-              name="account-edit"
-              size={26}
+            <MaterialIcons
+              name="edit"
+              size={30}
               onPress={() => navigation.navigate('EditProfile')}
               color="black"
             />
