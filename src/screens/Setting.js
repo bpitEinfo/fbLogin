@@ -10,7 +10,7 @@ import { color } from 'react-native-reanimated';
 import auth from "@react-native-firebase/auth";
 
 //import Share from 'react-native-share';
-const Setting = (props) => {
+const Setting = ({navigation}) => {
     const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(false);
     const [isLocationTrackingEnabled, setIsLocationTrackingEnabled] = useState(false);
     const onRatePress = () => {
@@ -44,6 +44,16 @@ const Setting = (props) => {
 
     return subscriber;
   }, []);
+  const changePassword = () => {
+    firebase.auth().sendPasswordResetEmail(firebase.auth(user.email)
+    .then(()=>{
+  alert("Password reset email sent")
+    }).catch((error)=>{
+      alert(error)
+    })
+    )
+  }
+
     const logout = () => {
         Alert.alert(
           "Logout",
@@ -60,7 +70,10 @@ const Setting = (props) => {
               onPress: () => {
                 auth()
                   .signOut()
-                  .then(() => navigation.navigate("Auth"))
+                  .then(() => navigation.navigate("Auth"),
+                    alert("Logout Successful. ")
+                
+                  )
                   .catch((error) => {
                     console.log(error);
                     if (error.code === "auth/no-current-user")
@@ -76,13 +89,7 @@ const Setting = (props) => {
     return (
 
         <View>
-            <AppHeader
-                title={props.route.name} headerbg={Colors.green} IconColor={Colors.white}
-                menu titleAlight="center" optionalBadge={2} navigation={props.navigation}
-                // back
-                right="more-vertical" rightfunction={() => console.log('right')}
-                optionalIcon="bell" optionalFunc={() => console.log('optional')}
-            />
+          
 
             <View style={[styles.setting]}>
                 <Text style={[styles.text]}>Notifications</Text>
