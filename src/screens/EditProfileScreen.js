@@ -28,7 +28,7 @@ const EditProfileScreen = () => {
 
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged((user) => {
-            console.log("user", JSON.stringify(user));
+           // console.log("user", JSON.stringify(user));
             setUser(user);
         });
 
@@ -196,7 +196,7 @@ const EditProfileScreen = () => {
                                 Welcome{" "}
                                 {user.displayName
                                     ? user.name
-                                    : user.uid}
+                                    : user.email}
                             </Text>
                         ) : null}
                     </View>

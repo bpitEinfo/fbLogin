@@ -52,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged((user) => {
-      console.log("user", JSON.stringify(user));
+     // console.log("user", JSON.stringify(user));
       setUser(user);
     });
 

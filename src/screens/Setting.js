@@ -29,7 +29,7 @@ const Setting = ({navigation}) => {
         Share.share({
             title: 'Share App',
             message: 'Check out this awesome app!',
-            url: 'https://your-app-store-link.com',
+            url: 'App Link',
             subject: 'Share App'
         });
     }

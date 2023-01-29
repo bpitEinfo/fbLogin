@@ -162,9 +162,6 @@ const ProfileStackScreen = ({ navigation }) => {
       <ProfileStack.Screen
         name="EditProfile"
         component={EditProfileScreen}
-        
-
-
       />
     </ProfileStack.Navigator>
   );

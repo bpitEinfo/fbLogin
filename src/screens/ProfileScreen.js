@@ -37,14 +37,14 @@ const ProfileScreen = (navigation) => {
     const [user, setUser] = useState('');
     const [users, setUsers] = useState('');
 
-    useEffect(() => {
-        const subscriber = auth().onAuthStateChanged((user) => {
-            console.log("user", JSON.stringify(user));
-            setUser(user);
-        });
+     useEffect(() => {
+         const subscriber = auth().onAuthStateChanged((user) => {
+           //  console.log("user", JSON.stringify(user));
+             setUser(user);
+         });
 
         return subscriber;
-    }, []);
+     }, []);
 
 
 
@@ -75,7 +75,7 @@ const ProfileScreen = (navigation) => {
 
                     <View style={{ marginLeft: 20 }}>
 
-                        <Text style={{ marginTop: 10, marginLeft: 0, fontSize: 18, fontWeight: 'bold', color: "black" }}>{users.name}</Text>
+                        <Text style={{ marginTop: 10, marginLeft: 0, fontSize: 18, fontWeight: 'bold', color: "black" }}>Shubham Rai</Text>
                         {user ? (
                             <Text style={{ marginTop: 5, width: "100%", fontSize: 14, color: "black", flexDirection: 'row' }}>
                                 Welcome{" "}
