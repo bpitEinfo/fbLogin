@@ -56,8 +56,8 @@ const EditProfileScreen = () => {
         });
 
     }
-    const todoRef = firebase.firestore().collection('newData');
-    const [addData, setAddData] = useState();
+    const todoRef = firebase.firestore().collection(user.email);
+    const [name, setName] = useState();
     const [addPhone, setAddPhone] = useState();
     const [addenroll, setAddEnroll] = useState();
     const [addsection, setAddSection] = useState();
@@ -65,10 +65,10 @@ const EditProfileScreen = () => {
     const [addaddress, setAddAddress] = useState();
     const [addcaption, setAddCaption] = useState();
     const AddField = () => {
-        if (addData && addData.length > 0) {
+        if (name && name.length > 0) {
             const timestamp = firebase.firestore.FieldValue.serverTimestamp();
             const data = {
-                name: addData,
+                name: name,
                 createdAt: timestamp,
                 phone: addPhone,
                 enroll: addenroll,
@@ -82,7 +82,8 @@ const EditProfileScreen = () => {
                 .add(data)
                 .then(() => {
                     //release the new field
-                    setAddData('');
+                   setName(name);
+                    
                     //release keyboard
                     Keyboard.dismiss();
                 })
@@ -216,8 +217,8 @@ const EditProfileScreen = () => {
                             placeholderTextColor="#666666"
                             autoCorrect={false}
                             style={styles.textInput}
-                            onChangeText={(name) => setAddData(name)}
-                            value={addData}
+                            onChangeText={(name) => setName(name)}
+                            value={name}
                         />
                     </View>
                     <View style={styles.action}>
@@ -259,7 +260,7 @@ const EditProfileScreen = () => {
                     </View>
                     <View style={styles.action}>
 
-                    <MaterialIcons name="supervised-user-circle" color='black' size={20} />
+                        <MaterialIcons name="supervised-user-circle" color='black' size={20} />
                         <TextInput
                             placeholder="Father Name"
                             placeholderTextColor="#666666"
@@ -270,7 +271,7 @@ const EditProfileScreen = () => {
                         />
                     </View>
                     <View style={styles.action}>
-                    <MaterialIcons name="add" color='black' size={20} />
+                        <MaterialIcons name="add" color='black' size={20} />
 
 
                         <TextInput
