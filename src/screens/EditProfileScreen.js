@@ -2,8 +2,16 @@ import React from "react";
 import { View, Button, StyleSheet, Text, TouchableOpacity, ImageBackground, TextInput, Keyboard, Alert, } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
+
+//Vector icons
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import Feather from 'react-native-vector-icons/Feather'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import Entypo from 'react-native-vector-icons/Entypo';
 import { color } from "react-native-reanimated";
 import { ScrollView } from "react-native-gesture-handler";
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -28,7 +36,7 @@ const EditProfileScreen = () => {
 
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged((user) => {
-           // console.log("user", JSON.stringify(user));
+            // console.log("user", JSON.stringify(user));
             setUser(user);
         });
 
@@ -201,7 +209,8 @@ const EditProfileScreen = () => {
                         ) : null}
                     </View>
                     <View style={styles.action}>
-                        <FontAwesome color={color.text} name="user-o" size={20} />
+                        <MaterialIcons name="account-circle" color='black' size={20} />
+
                         <TextInput
                             placeholder="Name"
                             placeholderTextColor="#666666"
@@ -212,7 +221,7 @@ const EditProfileScreen = () => {
                         />
                     </View>
                     <View style={styles.action}>
-                        <FontAwesome color={color.text} name="user-o" size={20} />
+                        <MaterialIcons name="phone" color='black' size={20} />
                         <TextInput
                             placeholder="Phone Number"
                             keyboardType="number-pad"
@@ -225,7 +234,8 @@ const EditProfileScreen = () => {
                     </View>
 
                     <View style={styles.action}>
-                        <FontAwesome color={color.text} name="user-o" size={20} />
+                        <MaterialIcons name="confirmation-number" color='black' size={20} />
+
                         <TextInput
                             placeholder="Enrollment Number "
                             placeholderTextColor="#666666"
@@ -237,7 +247,7 @@ const EditProfileScreen = () => {
                         />
                     </View>
                     <View style={styles.action}>
-                        <FontAwesome color={color.text} name="user-o" size={20} />
+                        <MaterialIcons name="confirmation-number" color='black' size={20} />
                         <TextInput
                             placeholder="Section "
                             placeholderTextColor="#666666"
@@ -248,7 +258,8 @@ const EditProfileScreen = () => {
                         />
                     </View>
                     <View style={styles.action}>
-                        <FontAwesome color={color.text} name="user-o" size={20} />
+
+                    <MaterialIcons name="supervised-user-circle" color='black' size={20} />
                         <TextInput
                             placeholder="Father Name"
                             placeholderTextColor="#666666"
@@ -259,7 +270,9 @@ const EditProfileScreen = () => {
                         />
                     </View>
                     <View style={styles.action}>
-                        <FontAwesome color={color.text} name="user-o" size={20} />
+                    <MaterialIcons name="add" color='black' size={20} />
+
+
                         <TextInput
                             placeholder="Address "
                             placeholderTextColor="#666666"
@@ -270,7 +283,7 @@ const EditProfileScreen = () => {
                         />
                     </View>
                     <View style={styles.action}>
-                        <FontAwesome color={color.text} name="user-o" size={20} />
+                        <MaterialIcons color='black' name="closed-caption" size={20} />
                         <TextInput
                             placeholder="Caption "
                             placeholderTextColor="#666666"

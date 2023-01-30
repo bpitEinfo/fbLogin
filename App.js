@@ -16,8 +16,7 @@ import Setting from "./src/screens/Setting";
 import Privacy from "./src/screens/Privacy";
 import QrCode from "./src/screens/QrCode";
 //Vector icons
-import SimpleLineIcons
-  from 'react-native-vector-icons/SimpleLineIcons'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Feather from 'react-native-vector-icons/Feather'
