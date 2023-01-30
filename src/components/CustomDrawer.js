@@ -5,14 +5,7 @@ import { DrawerContentScrollView,DrawerItemList } from "@react-navigation/drawer
 import { Title } from "react-native-paper";
 import Colors from "../Constants/Colors";
 const imgPlaceHolder ='/home/shubham/Desktop/fbLogin/src/Image/user-profile.jpg'
-const UserView=()=>{
-return(
-    <View style={{ alignItems: 'center', justifyContent: 'center', height: 200 }}>
-    <Image source={require('../Image/user-profile.jpg')} />
-    <Title>Shubham Rai</Title>
-  </View>
-)
-}
+
 const CustomDrawer=(props)=>{
     return(
         <View style={{flex:1,backgroundColor:'#fff8dc',paddingBottom:10}}>
