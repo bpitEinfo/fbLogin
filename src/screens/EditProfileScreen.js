@@ -20,10 +20,11 @@ import { Image } from "react-native-svg";
 import ImagePicker from "react-native-image-crop-picker";
 import { useState, useEffect } from "react";
 import ManageExternalStorage from 'react-native-manage-external-storage';
-import auth, { firebase } from '@react-native-firebase/auth'
+import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
+import firebase from '@react-native-firebase/app';
 
 
 
@@ -56,7 +57,9 @@ const EditProfileScreen = () => {
         });
 
     }
-    const todoRef = firebase.firestore().collection(user.email);
+
+    
+    const todoRef = firebase.firestore().collection('user.email');
     const [name, setName] = useState();
     const [addPhone, setAddPhone] = useState();
     const [addenroll, setAddEnroll] = useState();

@@ -7,6 +7,7 @@ import {
     StyleSheet,
     ScrollView,
     SafeAreaView,
+    Pressable,
 } from 'react-native';
 import { Paragraph, Surface, Title } from 'react-native-paper';
 import {
@@ -21,37 +22,69 @@ import { color } from "react-native-reanimated";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import AppHeader from "../components/AppHeader";
 import EditProfileScreen from "./EditProfileScreen";
-import auth, { firebase } from '@react-native-firebase/auth'
+import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { FlatList } from "react-native-gesture-handler";
 
-
-const dummyText = "My name is Shubham Rai."
-export const name = "Shubham Rai"
-export const registration = "00920807220"
-export const section = "134-CSE-B-19"
-const fatherName = "Om Prakash"
-export const phone_number = "8178352411"
+// const dummyText = "My name is Shubham Rai."
+// export const name = "Shubham Rai"
+// export const registration = "00920807220"
+// export const section = "134-CSE-B-19"
+// const fatherName = "Om Prakash"
+// export const phone_number = "8178352411"
 const ProfileScreen = (navigation) => {
 
 
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState([]);
+    const todoRef = firebase.firestore().collection('user.email');
     const [users, setUsers] = useState('');
 
-     useEffect(() => {
-         const subscriber = auth().onAuthStateChanged((user) => {
-           //  console.log("user", JSON.stringify(user));
-             setUser(user);
-         });
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged((user) => {
+            //  console.log("user", JSON.stringify(user));
+            setUser(user);
+        });
 
         return subscriber;
-     }, []);
+    }, []);
 
 
 
-    useEffect(() => {
-        firestore().collection('user').get().then(docsnap => {
-            setUsers(docsnap)
-        });
+    useEffect(async () => {
+        todoRef
+            .onSnapshot(
+                querySnapshot => {
+                    const users = []
+                    querySnapshot.forEach((doc) => {
+                        const {
+                            name,
+                            enroll,
+                            father,
+                            phone,
+                            section,
+                            caption,
+                            address
+                        } = doc.data()
+                        users.push({
+                            id: doc.id,
+                            name,
+                            enroll,
+                            father,
+                            phone,
+                            section,
+                            caption,
+                            address
+                        })
+                    })
+                    console.log("users", JSON.stringify(users));
+
+                    setUsers(users);
+
+                }
+            )
+
 
     }, []
     )
@@ -75,7 +108,7 @@ const ProfileScreen = (navigation) => {
 
                     <View style={{ marginLeft: 20 }}>
 
-                        <Text style={{ marginTop: 10, marginLeft: 0, fontSize: 18, fontWeight: 'bold', color: "black" }}>Shubham Rai</Text>
+                        <Text style={{ marginTop: 10, marginLeft: 0, fontSize: 18, fontWeight: 'bold', color: "black" }}>{users.name}</Text>
                         {user ? (
                             <Text style={{ marginTop: 5, width: "100%", fontSize: 14, color: "black", flexDirection: 'row' }}>
                                 Welcome{" "}
@@ -89,33 +122,60 @@ const ProfileScreen = (navigation) => {
             </View>
 
             <View style={styles.profileContainer}>
+                <FlatList
+                    data={users}
+                    numColumns={1}
+                    renderItem={({ item }) => (
+                        <SafeAreaView >
+                            <View style={{ flexDirection: 'row',backgroundColor:'blue',width:'100'}}>
+                                <MaterialIcons name="account-circle" color='black' size={20} />
+                                <Text style={{ color: 'black', marginBottom: 10 }}>Name : {item.name}</Text>
+                            </View>
+                            <View>
+                                <MaterialIcons name="confirmation-number" color='black' size={20} />
+                                <Text style={{ color: 'black' }}>Enrollment Number :  {item.enroll}</Text>
+                            </View>
+                            <View>
+                                <MaterialIcons name="confirmation-number" color='black' size={20} />
+
+                                <Text style={{ color: 'black' }}>Section :  {item.section}</Text>
+                            </View>
+                            <View>
+                                <MaterialIcons name="supervised-user-circle" color='black' size={20} />
+
+                                <Text style={{ color: 'black' }}>Father Name : {item.father}</Text>
+                            </View>
+
+                            <View>
+                                <MaterialIcons name="phone" color='black' size={20} />
+
+                                <Text style={{ color: 'black' }}> Phone Number{item.phone}</Text>
+                            </View>
+
+                            <View>
+                                <MaterialIcons color='black' name="closed-caption" size={20} />
+
+                                <Text style={{ color: 'black' }}> Student Caption : {item.caption}</Text>
+
+                            </View>
+
+                            <View>
+                                <MaterialIcons name="add" color='black' size={20} />
+                                <Text style={{ color: 'black' }}> Student Address {item.address}</Text>
+                            </View>
 
 
-                <View style={styles.userInfo} >
-                    <Surface style={styles.bio}>
-                        <Title>Roll_Number</Title>
-                        <Paragraph numberOfLines={4}> {registration} </Paragraph>
-                    </Surface>
-                    <Surface style={styles.bio}>
-                        <Title>Section</Title>
-                        <Paragraph numberOfLines={4}> {section} </Paragraph>
-                    </Surface>
-                    <Surface style={styles.bio}>
-                        <Title>Father Name</Title>
-                        <Paragraph numberOfLines={4}> {fatherName} </Paragraph>
-                    </Surface>
-                    <Surface style={styles.bio}>
-                        <Title>Phone Number</Title>
-                        <Paragraph numberOfLines={4}> {phone_number} </Paragraph>
-                    </Surface>
-                    <Surface style={[styles.bio, { height: 80 }]}>
-                        <Title>Address</Title>
-                        <Text style={{ color: 'black', fontWeight: "500" }}>C-201/2 Pratap Vihar Part-3 Kirari Delhi . </Text>
-                    </Surface>
-                </View>
-            </View>
 
-        </SafeAreaView>
+                        </SafeAreaView>
+
+                    )
+
+                    }
+                />
+
+            </View >
+
+        </SafeAreaView >
 
     )
 }
@@ -174,7 +234,7 @@ const styles = StyleSheet.create({
     },
     profileContainer: {
         flex: 0.7,
-        marginTop: 10,
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
 
