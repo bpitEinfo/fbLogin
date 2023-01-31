@@ -59,7 +59,7 @@ const EditProfileScreen = () => {
     }
 
     
-    const todoRef = firebase.firestore().collection('user.email');
+    const todoRef = firebase.firestore().collection('user.email').doc('KCLuscJDktImEj6m1qqg');
     const [name, setName] = useState();
     const [addPhone, setAddPhone] = useState();
     const [addenroll, setAddEnroll] = useState();
@@ -82,7 +82,7 @@ const EditProfileScreen = () => {
 
             };
             todoRef
-                .add(data)
+                .update(data)
                 .then(() => {
                     //release the new field
                    setName(name);

@@ -1,8 +1,8 @@
 // import React in our code
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AppHeader from '../components/AppHeader';
-import Profile  from './Profile';
-import { registration ,phone_number,name,section} from './Profile';
+import Profile from './Profile';
+import { registration, phone_number, name, section } from './Profile';
 // import all the components we are going to use
 import {
   SafeAreaView,
@@ -17,6 +17,10 @@ import {
 import { Surface } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import Colors from '../Constants/Colors';
+import QRCODE from '../components/QRCODE';
+import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
+import { FlatList } from 'react-native-gesture-handler';
 
 const App = (props) => {
   const [inputText, setInputText] = useState('');
@@ -35,68 +39,141 @@ const App = (props) => {
       Share.share(shareImageBase64).catch((error) => console.log(error));
     });
   };
+  ///
+
+  const [users, setUsers] = useState('');
+  const todoRef = firebase.firestore().collection('user.email');
+
+  useEffect(() => {
+    (async () => {
+      todoRef
+        .onSnapshot(
+          querySnapshot => {
+            const users = []
+            querySnapshot.forEach((doc) => {
+              const {
+                name,
+                enroll,
+                father,
+                phone,
+                section,
+                caption,
+                address
+              } = doc.data()
+              users.push({
+                id: doc.id,
+                name,
+                enroll,
+                father,
+                phone,
+                section,
+                caption,
+                address
+              })
+            })
+           // console.log("users", JSON.stringify(users));
+
+            setUsers(users);
+
+          }
+        )
+    })();
+
+
+  }, []
+  );
+
+
+  const initialItemState = {
+    name: " ",
+    enroll: " ",
+    section: " ",
+    father: " ",
+    phone: " ",
+    address: " "
+
+  }
+
+  const [item, setItem] = useState(initialItemState);
+  const [productQRref, setProductQRref] = useState();
 
   return (
+    <FlatList
+      data={users}
+      numColumns={1}
+      renderItem={({ item }) => (
 
-    <SafeAreaView style={{ flex: 1, paddingTop: 0 }}>
-  
-           
-            
-    
+        <SafeAreaView style={{ flex: 1, paddingTop: 15 }}>
 
-        <Text style={styles.titleStyle}>
-          Generation of QR Code in React Native
-        </Text>
+
+          <Text style={styles.titleStyle}>
+            Generation of QR Code in React Native
+          </Text>
           <View style={(styles.container)}>
-        <QRCode
+            <QRCode 
 
-          getRef={(ref) => (myQRCode = ref)}
-          // ref={myQRCode}
-          //QR code value
-          value={qrvalue ? qrvalue : 'NA'}
-          //size of QR Code
-          size={230}
-          //Color of the QR Code (Optional)
-          color="black"
-          //Background Color of the QR Code (Optional)
-          backgroundColor="white"
-          enableLinearGradient="true"
-          logo={require('/home/shubham/Desktop/fbLogin/src/Image/Bpitqrlogo.png')}
-          logoSize={35}
-          logoMargin={2}
-        />
-        <Text style={styles.textStyle}>
-          Please insert any value to generate QR code
-        </Text>
-        <TextInput
-          style={styles.textInputStyle}
-          onChangeText={(inputText) => setInputText(inputText)}
-         // placeholder="Enter Any Value"
-          value={registration}
-        />
-        <View style={{
-          justifyContent: 'space-between',
-          flexDirection: 'row'
-        }}>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={() => setQrvalue(registration)}>
-            <Text style={styles.buttonTextStyle}>
-              Generate QR Code
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={shareQRCode}>
-            <Text style={styles.buttonTextStyle}>
-              Share QR Code
-            </Text>
-          </TouchableOpacity>
-        </View>
+              // ref={myQRCode}
+              //QR code value
+              value={JSON.stringify({
+                Name: item.name,
+                Enroll: item.enroll,
+                Section: item.section,
+                Father: item.father,
+                Phone: item.phone,
+                Address: item.address
+                
 
-        
-      </View>
-    </SafeAreaView>
+
+              })}
+              size={300}
+              //Color of the QR Code (Optional)
+              color="black"
+              //Background Color of the QR Code (Optional)
+              backgroundColor="white"
+              enableLinearGradient="true"
+              logo={require('/home/shubham/Desktop/fbLogin/src/Image/Bpitqrlogo.png')}
+              logoSize={30}
+
+              logoMargin={12}
+
+              getRef={(c) => setProductQRref(c)}
+            />
+            <SafeAreaView style={{ flex: 1, paddingTop: 50,borderRadius:20}}>
+              <View >
+                <Text style={{ color: 'black' ,paddingLeft:10,paddingRight:10,paddingBottom:5}}>
+                  This is The QR_CODE For the Students Who are Studying in the Bpit College.
+
+                </Text>
+              </View>
+              <View >
+                <Text style={{ color: 'black' ,paddingLeft:10,paddingRight:10}}>
+                  In This Qr_Code  Your Id Card detail are Present.
+                </Text>
+              </View>
+            </SafeAreaView>
+
+
+            <View style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row-reverse'
+            }}>
+              
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                onPress={shareQRCode}>
+                <Text style={styles.buttonTextStyle}>
+                  Share QR Code
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+
+          </View>
+        </SafeAreaView>
+      )
+
+      }
+    />
   );
 };
 export default App;
@@ -108,19 +185,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    
+
   },
   titleStyle: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-    color:"black",
-    marginBottom:10,
+    color: "black",
+    marginBottom: 10,
     backgroundColor: '#f0ffff',
   },
   textStyle: {
     textAlign: 'center',
-    color:"black"
+    color: "black"
 
   },
   textInputStyle: {
@@ -130,7 +207,7 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     marginRight: 35,
     margin: 10,
-    color:"black"
+    color: "black"
 
   },
   buttonStyle: {
@@ -142,8 +219,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 30,
     padding: 10,
-    color:"black"
-,
+    color: "black"
+    ,
     margin: 20,
 
   },

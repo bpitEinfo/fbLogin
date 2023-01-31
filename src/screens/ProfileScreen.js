@@ -47,47 +47,49 @@ const ProfileScreen = (navigation) => {
             setUser(user);
         });
 
-        return subscriber;
+        // return subscriber;
     }, []);
 
 
 
-    useEffect(async () => {
-        todoRef
-            .onSnapshot(
-                querySnapshot => {
-                    const users = []
-                    querySnapshot.forEach((doc) => {
-                        const {
-                            name,
-                            enroll,
-                            father,
-                            phone,
-                            section,
-                            caption,
-                            address
-                        } = doc.data()
-                        users.push({
-                            id: doc.id,
-                            name,
-                            enroll,
-                            father,
-                            phone,
-                            section,
-                            caption,
-                            address
+    useEffect(() => {
+        (async () => {
+            todoRef
+                .onSnapshot(
+                    querySnapshot => {
+                        const users = []
+                        querySnapshot.forEach((doc) => {
+                            const {
+                                name,
+                                enroll,
+                                father,
+                                phone,
+                                section,
+                                caption,
+                                address
+                            } = doc.data()
+                            users.push({
+                                id: doc.id,
+                                name,
+                                enroll,
+                                father,
+                                phone,
+                                section,
+                                caption,
+                                address
+                            })
                         })
-                    })
-                    console.log("users", JSON.stringify(users));
+                        console.log("users", JSON.stringify(users));
 
-                    setUsers(users);
+                        setUsers(users);
 
-                }
-            )
+                    }
+                )
+        })();
 
 
     }, []
-    )
+    );
 
 
     return (
@@ -120,16 +122,16 @@ const ProfileScreen = (navigation) => {
                     </View>
                 </View>
             </View>
-
-            <View style={styles.profileContainer}>
+          
+             <View style={styles.profileContainer}>
                 <FlatList
                     data={users}
                     numColumns={1}
                     renderItem={({ item }) => (
                         <SafeAreaView >
-                            <View style={{ flexDirection: 'row',backgroundColor:'blue',width:'100'}}>
-                                <MaterialIcons name="account-circle" color='black' size={20} />
-                                <Text style={{ color: 'black', marginBottom: 10 }}>Name : {item.name}</Text>
+                            <View style={{ flexDirection: 'row',backgroundColor:'white',width:350,height:30,borderRadius:50}}>
+                                <MaterialIcons name="account-circle" color='black' size={22}  style={{marginBottom:1}}/>
+                                <Text style={{ color: 'black', marginBottom: 10, marginLeft:10,marginTop:4 }}>Name : {item.name}</Text>
                             </View>
                             <View>
                                 <MaterialIcons name="confirmation-number" color='black' size={20} />
@@ -164,7 +166,7 @@ const ProfileScreen = (navigation) => {
                                 <Text style={{ color: 'black' }}> Student Address {item.address}</Text>
                             </View>
 
-
+ 
 
                         </SafeAreaView>
 
@@ -174,6 +176,7 @@ const ProfileScreen = (navigation) => {
                 />
 
             </View >
+            
 
         </SafeAreaView >
 
