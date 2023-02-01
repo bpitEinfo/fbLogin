@@ -86,7 +86,7 @@ const EditProfileScreen = () => {
                 .then(() => {
                     //release the new field
                    setName(name);
-                    
+                    alert("Profile Upadate")
                     //release keyboard
                     Keyboard.dismiss();
                 })
