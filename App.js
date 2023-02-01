@@ -1,7 +1,4 @@
-// #6 Email Authentication using Firebase Authentication in React Native App
-// https://aboutreact.com/react-native-firebase-authentication/
 import "react-native-gesture-handler";
-
 // Import React and Component
 import React from "react";
 import { View, Text, useWindowDimensions } from "react-native";
@@ -11,7 +8,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 //Drawer
 import CustomDrawer from "./src/components/CustomDrawer";
-import Profile from "./src/screens/Profile";
 import Setting from "./src/screens/Setting";
 import Privacy from "./src/screens/Privacy";
 import QrCode from "./src/screens/QrCode";
@@ -27,13 +23,16 @@ import SplashScreen from "./src/screens/SplashScreen";
 import LoginScreen from "./src/screens/Loginscreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import HomeScreen from "./src/screens/HomeScreen";
-import PrivacyScreen from "./src/screens/PrivacyScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import EditProfileScreen from "./src/screens/EditProfileScreen";
 
+
+//these stacks are used to navigate screens.
 const Stack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+//appstack is used to navigate in the drawer.
 function AppStack({ navigation }) {
   const dimension = useWindowDimensions();
   const drawerType = dimension.width >= 700 ? 'permanent' : 'front';
@@ -97,7 +96,7 @@ function AppStack({ navigation }) {
   )
 }
 
-
+//auth is used to navigate in the stack.
 const Auth = ({ navigation }) => {
   // Stack Navigator for Login and Sign up Screen
   return (
@@ -117,7 +116,7 @@ const Auth = ({ navigation }) => {
     </Stack.Navigator>
   );
 };
-//Profile Stack
+//Profile Stack is used to navigate in the stack.
 
 const ProfileStackScreen = ({ navigation }) => {
   // Stack Navigator for Login and Sign up Screen

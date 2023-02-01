@@ -1,8 +1,5 @@
 // import React in our code
 import React, { useState, useEffect, useRef } from 'react';
-import AppHeader from '../components/AppHeader';
-import Profile from './Profile';
-import { registration, phone_number, name, section } from './Profile';
 // import all the components we are going to use
 import {
   SafeAreaView,
@@ -22,11 +19,25 @@ import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import { FlatList } from 'react-native-gesture-handler';
 
-const App = (props) => {
+const App = ({navigation}) => {
   const [inputText, setInputText] = useState('');
   const [qrvalue, setQrvalue] = useState('');
   let myQRCode = useRef();
 
+  const handleShare =async ()=>{
+    const options={
+      title: 'Share is your QRcode',
+      url: `data:image/png;base64,${dataURL}`,
+      subject: 'Share Link', //  for email
+      message: "Shubham"
+   
+    }
+  try {
+    await Share.open(options);
+  } catch (err) {
+    console.log(err)
+  }
+}
   const shareQRCode = () => {
     myQRCode.toDataURL((dataURL) => {
       console.log(dataURL);

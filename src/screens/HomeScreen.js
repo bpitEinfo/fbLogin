@@ -21,6 +21,7 @@ const data = [
     { id: '4', title: 'Placement Records', image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqBsjriafKHP-pTgr8QU6w4iqtISEmPLFZ6w&usqp=CAU", favorite: true, discription: 'The placement in BPIT is improving significantly both in terms of quality and quantity in the last few years. The average package has increased from 3.76 Lakhs per annum to 7.51 Lakhs per annum in last 5 years. The companies like Microsoft (41.86 LPA), Amazon (30.25 LPA), Hotstar (24 LPA), Myntra (24 LPA), Commvault (20 LPA), AWS (19 LPA), Mu Sigma (21 LPA), Byju’s (10 LPA), Josh Technologies (10 LPA), Hashdien (8 LPA), ZS associates (7.93 LPA) regularly visit campus besides all major mass recruiters. The prominent feature of BPIT’s placement is that the median package for 2021 batch is 7.0 LPA. There are twelve companies that offered more than 10 Lakhs per annum package and Twenty-eight companies with more than 7 Lakhs per annum offered jobs to our students for the 2021 pass out batch. The average number of offers per student is 1.6 for 2021 pass out students.' },
     
 ]
+//Card Item 
 const CardItem =
     ({ item }) => {
         const [showMore, setShowMore] = useState(false);
@@ -47,8 +48,10 @@ const CardItem =
         )
     }
 const HomeScreen = ({ navigation }) => {
+  //UseState hook is used to  create state variables for our component. State variables are used to store dynamic data in our component which can user interacts with it.
   const [user, setUser] = useState();
-
+ //useEffect hook is used  to allow us to respond to cahnge in the component 
+    //It is used  update data
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged((user) => {
      // console.log("user", JSON.stringify(user));
@@ -58,6 +61,8 @@ const HomeScreen = ({ navigation }) => {
     return subscriber;
   }, []);
 
+
+  //Logout Function
   const logout = () => {
     Alert.alert(
       "Logout",
@@ -91,9 +96,12 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View>
            
+{/* //FlatList component displays the similar structured data in a scrollable list */}
 
     <FlatList style={styles.List}
+    //store in data variable
         data={data}
+        // Used to extract a unique key for a given item at the specified index
         keyExtractor={(item, index) => item.id + index.toString()}
         // ListHeaderComponent={
         //     <AppHeader

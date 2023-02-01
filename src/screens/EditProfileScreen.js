@@ -1,9 +1,10 @@
+// Import React and Component
 import React from "react";
+import { useState, useEffect } from "react";
 import { View, Button, StyleSheet, Text, TouchableOpacity, ImageBackground, TextInput, Keyboard, Alert, } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 //Vector icons
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -12,18 +13,18 @@ import Feather from 'react-native-vector-icons/Feather'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo';
+//packages
 import { color } from "react-native-reanimated";
 import { ScrollView } from "react-native-gesture-handler";
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from "react-native-reanimated";
 import { Image } from "react-native-svg";
 import ImagePicker from "react-native-image-crop-picker";
-import { useState, useEffect } from "react";
 import ManageExternalStorage from 'react-native-manage-external-storage';
+//fire base module.
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-
 import firebase from '@react-native-firebase/app';
 
 
@@ -32,9 +33,10 @@ import firebase from '@react-native-firebase/app';
 
 const EditProfileScreen = () => {
 
+    //UseState hook is used to  create state variables for our component. State variables are used to store dynamic data in our component which can user interacts with it.
     const [user, setUser] = useState();
-
-
+    //useEffect hook is used  to allow us to respond to cahnge in the component 
+    //It is used  update data
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged((user) => {
             // console.log("user", JSON.stringify(user));
@@ -44,9 +46,7 @@ const EditProfileScreen = () => {
         return subscriber;
     }, []);
     const [image, setImage] = useState(null);
-    const [uploading, setUploading] = useState(false);
-    const [transferred, setTransferred] = useState(0);
-    const [userData, setUserData] = useState(null);
+
     const takePhotoFromCamera = () => {
         ImagePicker.openCamera({
             width: 300,
@@ -58,15 +58,23 @@ const EditProfileScreen = () => {
 
     }
 
-    
+    //In EditProfile todoRef is used fore store the data in the database firestore;
     const todoRef = firebase.firestore().collection('user.email').doc('KCLuscJDktImEj6m1qqg');
+    //name
     const [name, setName] = useState();
+    //phone
     const [addPhone, setAddPhone] = useState();
+    //Enroll
     const [addenroll, setAddEnroll] = useState();
+    //AddSection
     const [addsection, setAddSection] = useState();
+    //AddFather
     const [addfather, setAddFather] = useState();
+    //Addaddress
     const [addaddress, setAddAddress] = useState();
+    //Add Caption
     const [addcaption, setAddCaption] = useState();
+    //Store VAlue in ADDField function
     const AddField = () => {
         if (name && name.length > 0) {
             const timestamp = firebase.firestore.FieldValue.serverTimestamp();
@@ -85,7 +93,7 @@ const EditProfileScreen = () => {
                 .update(data)
                 .then(() => {
                     //release the new field
-                   setName(name);
+                    setName(name);
                     alert("Profile Upadate")
                     //release keyboard
                     Keyboard.dismiss();
@@ -139,11 +147,9 @@ const EditProfileScreen = () => {
     )
 
 
-
+    //createRef returns an object with a single property:
     bs = React.createRef();
     fall = new Animated.Value(1);
-
-
 
     return (
         <ScrollView>

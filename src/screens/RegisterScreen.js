@@ -1,7 +1,3 @@
-// #6 Email Authentication using Firebase Authentication in React Native App
-// https://aboutreact.com/react-native-firebase-authentication/
-
-// Import React and Component
 import React, { useState, createRef } from "react";
 import {
   SafeAreaView,
@@ -19,8 +15,11 @@ import {
 import auth from "@react-native-firebase/auth";
 
 const RegisterScreen = ({ navigation }) => {
+  //User Email
   const [userEmail, setUserEmail] = useState("");
+  //User Pass
   const [userPassword, setUserPassword] = useState("");
+  //Errror
   const [errortext, setErrortext] = useState("");
 
   const emailInputRef = createRef();
@@ -28,7 +27,6 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleSubmitButton = () => {
     setErrortext("");
-    if (!userName) return alert("Please fill Name");
     if (!userEmail) return alert("Please fill Email");
     if (!userPassword) return alert("Please fill Address");
 

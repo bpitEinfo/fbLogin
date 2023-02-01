@@ -12,7 +12,6 @@ import {
 import { Paragraph, Surface, Title } from 'react-native-paper';
 import {
     Avatar,
-
     Caption,
     TouchableRipple,
 } from 'react-native-paper';
@@ -25,7 +24,9 @@ import EditProfileScreen from "./EditProfileScreen";
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
+//Vector Icon is user for render Icons 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+//Flat List is used for rendser the similar structured data in scrollable list.
 import { FlatList } from "react-native-gesture-handler";
 
 // const dummyText = "My name is Shubham Rai."
@@ -36,14 +37,17 @@ import { FlatList } from "react-native-gesture-handler";
 // export const phone_number = "8178352411"
 const ProfileScreen = (navigation) => {
 
-
+    //UseState hook is used to  create state variables for our component. State variables are used to store dynamic data in our component which can user interacts with it.
     const [user, setUser] = useState([]);
+    //User store data in todoRef variable
     const todoRef = firebase.firestore().collection('user.email');
     const [users, setUsers] = useState('');
-
+    //useEffect hook is used  to allow us to respond to cahnge in the component 
+    //It is used  update data
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged((user) => {
             //  console.log("user", JSON.stringify(user));
+            //store in user data
             setUser(user);
         });
 
@@ -79,7 +83,7 @@ const ProfileScreen = (navigation) => {
                                 address
                             })
                         })
-                       // console.log("users", JSON.stringify(users));
+                        // console.log("users", JSON.stringify(users));
 
                         setUsers(users);
 
@@ -94,15 +98,10 @@ const ProfileScreen = (navigation) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* <AppHeader
-                title={navigation.route.name} headerbg={Colors.green} IconColor={Colors.white}
-                menu titleAlight="center" optionalBadge={2} navigation={navigation.navigation}
-                // back
-                right="more-vertical" rightfunction={() => console.log('right')}
-                optionalIcon="bell" optionalFunc={() => console.log('optional')}
-            /> */}
+
             <View style={styles.userInfoSection}>
                 <View style={{ marginTop: 10, alignItems: "center", paddingTop: 10 }}>
+                    {/* It is used Avatar Image */}
                     <Avatar.Image
                         source={require('../Image/user-profile.jpg')}
                         size={100}
@@ -114,6 +113,7 @@ const ProfileScreen = (navigation) => {
                         {user ? (
                             <Text style={{ marginTop: 5, width: "100%", fontSize: 14, color: "black", flexDirection: 'row' }}>
                                 Welcome{" "}
+                                {/* Display email or name */}
                                 {user.displayName
                                     ? user.name
                                     : user.email}
@@ -122,51 +122,53 @@ const ProfileScreen = (navigation) => {
                     </View>
                 </View>
             </View>
-          
-             <View style={styles.profileContainer}>
+
+            <View style={styles.profileContainer}>
+                {/* //FlatList component displays the similar structured data in a scrollable list */}
+
                 <FlatList
                     data={users}
                     numColumns={1}
                     renderItem={({ item }) => (
                         <SafeAreaView >
-                            <View style={{ flexDirection: 'row',backgroundColor:'white',width:350,height:34,borderRadius:50, marginBottom:10}}>
-                                <MaterialIcons name="account-circle" color='black' size={25}  style={{marginBottom:1,marginLeft:4,marginTop:4}}/>
-                                <Text style={{ color: 'black', marginBottom: 10, marginLeft:10,marginTop:6 }}>Name : {item.name}</Text>
+                            <View style={{ flexDirection: 'row', backgroundColor: 'white', width: 350, height: 34, borderRadius: 50, marginBottom: 10 }}>
+                                <MaterialIcons name="account-circle" color='black' size={25} style={{ marginBottom: 1, marginLeft: 4, marginTop: 4 }} />
+                                <Text style={{ color: 'black', marginBottom: 10, marginLeft: 10, marginTop: 6 }}>Name : {item.name}</Text>
                             </View>
-                            <View  style={{ flexDirection: 'row',backgroundColor:'white',width:350,height:34,borderRadius:50 , marginBottom:10}}>
-                                <MaterialIcons name="confirmation-number" color='black' size={20} style={{marginBottom:1,marginLeft:4,marginTop:4}} />
-                                <Text style={{ color: 'black', marginBottom: 10, marginLeft:10,marginTop:6 }}>Enrollment Number :  {item.enroll}</Text>
+                            <View style={{ flexDirection: 'row', backgroundColor: 'white', width: 350, height: 34, borderRadius: 50, marginBottom: 10 }}>
+                                <MaterialIcons name="confirmation-number" color='black' size={20} style={{ marginBottom: 1, marginLeft: 4, marginTop: 4 }} />
+                                <Text style={{ color: 'black', marginBottom: 10, marginLeft: 10, marginTop: 6 }}>Enrollment Number :  {item.enroll}</Text>
                             </View>
-                            <View style={{ flexDirection: 'row',backgroundColor:'white',width:350,height:34,borderRadius:50 , marginBottom:10}}>
-                                <MaterialIcons name="confirmation-number" color='black' size={20}  style={{marginBottom:1,marginLeft:4,marginTop:4}}/>
+                            <View style={{ flexDirection: 'row', backgroundColor: 'white', width: 350, height: 34, borderRadius: 50, marginBottom: 10 }}>
+                                <MaterialIcons name="confirmation-number" color='black' size={20} style={{ marginBottom: 1, marginLeft: 4, marginTop: 4 }} />
 
-                                <Text style={{ color: 'black', marginBottom: 10, marginLeft:10,marginTop:6 }}>Section :  {item.section}</Text>
+                                <Text style={{ color: 'black', marginBottom: 10, marginLeft: 10, marginTop: 6 }}>Section :  {item.section}</Text>
                             </View>
-                            <View style={{ flexDirection: 'row',backgroundColor:'white',width:350,height:34,borderRadius:50 , marginBottom:10}}>
-                                <MaterialIcons name="supervised-user-circle" color='black' size={20} style={{marginBottom:1,marginLeft:4,marginTop:4}}/>
+                            <View style={{ flexDirection: 'row', backgroundColor: 'white', width: 350, height: 34, borderRadius: 50, marginBottom: 10 }}>
+                                <MaterialIcons name="supervised-user-circle" color='black' size={20} style={{ marginBottom: 1, marginLeft: 4, marginTop: 4 }} />
 
-                                <Text style={{ color: 'black', marginBottom: 10, marginLeft:10,marginTop:6 }}>Father Name : {item.father}</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row',backgroundColor:'white',width:350,height:34,borderRadius:50 , marginBottom:10}}>
-                                <MaterialIcons name="phone" color='black' size={20} style={{marginBottom:1,marginLeft:4,marginTop:4}}/>
-
-                                <Text style={{ color: 'black', marginBottom: 10, marginLeft:10,marginTop:6 }}> Phone Number{item.phone}</Text>
+                                <Text style={{ color: 'black', marginBottom: 10, marginLeft: 10, marginTop: 6 }}>Father Name : {item.father}</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row',backgroundColor:'white',width:350,height:34,borderRadius:50 , marginBottom:10}}>
-                                <MaterialIcons color='black' name="closed-caption" size={20}style={{marginBottom:1,marginLeft:4,marginTop:4}} />
+                            <View style={{ flexDirection: 'row', backgroundColor: 'white', width: 350, height: 34, borderRadius: 50, marginBottom: 10 }}>
+                                <MaterialIcons name="phone" color='black' size={20} style={{ marginBottom: 1, marginLeft: 4, marginTop: 4 }} />
 
-                                <Text style={{ color: 'black', marginBottom: 10, marginLeft:10,marginTop:6 }}> Student Caption : {item.caption}</Text>
+                                <Text style={{ color: 'black', marginBottom: 10, marginLeft: 10, marginTop: 6 }}> Phone Number{item.phone}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', backgroundColor: 'white', width: 350, height: 34, borderRadius: 50, marginBottom: 10 }}>
+                                <MaterialIcons color='black' name="closed-caption" size={20} style={{ marginBottom: 1, marginLeft: 4, marginTop: 4 }} />
+
+                                <Text style={{ color: 'black', marginBottom: 10, marginLeft: 10, marginTop: 6 }}> Student Caption : {item.caption}</Text>
 
                             </View>
 
-                            <View style={{ flexDirection: 'row',backgroundColor:'white',width:350,height:34,borderRadius:50 , marginBottom:10}}>
-                                <MaterialIcons name="add" color='black' size={20} style={{marginBottom:1,marginLeft:4,marginTop:4}}/>
-                                <Text style={{ color: 'black', marginBottom: 10, marginLeft:10,marginTop:6 }}> Student Address : {item.address}</Text>
+                            <View style={{ flexDirection: 'row', backgroundColor: 'white', width: 350, height: 34, borderRadius: 50, marginBottom: 10 }}>
+                                <MaterialIcons name="add" color='black' size={20} style={{ marginBottom: 1, marginLeft: 4, marginTop: 4 }} />
+                                <Text style={{ color: 'black', marginBottom: 10, marginLeft: 10, marginTop: 6 }}> Student Address : {item.address}</Text>
                             </View>
 
- 
+
 
                         </SafeAreaView>
 
@@ -176,7 +178,7 @@ const ProfileScreen = (navigation) => {
                 />
 
             </View >
-            
+
 
         </SafeAreaView >
 

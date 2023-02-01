@@ -1,7 +1,3 @@
-// #6 Email Authentication using Firebase Authentication in React Native App
-// https://aboutreact.com/react-native-firebase-authentication/
-
-// Import React and Component
 import React, { useState, createRef } from "react";
 import {
   SafeAreaView,
@@ -22,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errortext, setErrortext] = useState("");
-
+//createRef returns an object with a single property:
   const passwordInputRef = createRef();
 
   const handleSubmitPress = () => {
@@ -68,6 +64,7 @@ const LoginScreen = ({ navigation }) => {
         }}
       >
         <View>
+          {/* Adjust keyboard with height width padding margin */}
           <KeyboardAvoidingView enabled>
             <View style={{ alignItems: "center" }}>
               <Image
@@ -109,6 +106,7 @@ const LoginScreen = ({ navigation }) => {
                 placeholderTextColor="#8b9cb5"
                 keyboardType="default"
                 ref={passwordInputRef}
+                //dismiss() method is used to hide the keyboard 
                 onSubmitEditing={Keyboard.dismiss}
                 blurOnSubmit={false}
                 secureTextEntry={true}
