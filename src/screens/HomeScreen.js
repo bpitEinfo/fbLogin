@@ -39,7 +39,7 @@ const CardItem =
                     <Button>Share</Button>
                     <Button onPress={
                         () => setShowMore(!showMore)
-                    }>{showMore ? "Show less " : "Read More"}</Button>
+                    }>{showMore ? "Read less " : "Read More"}</Button>
 
                 </Card.Actions>
             </Card>
