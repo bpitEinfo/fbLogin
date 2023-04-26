@@ -36,7 +36,8 @@ const RegisterScreen = ({ navigation }) => {
         userPassword
       )
       .then((user) => {
-        alert("Registration Successful. ")
+        user.user.sendEmailVerification()
+        alert("Verification Mail Sent ")
         console.log(
           "Registration Successful. Please Login to proceed"
         );
