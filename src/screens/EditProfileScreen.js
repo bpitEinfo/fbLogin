@@ -59,7 +59,7 @@ const EditProfileScreen = () => {
     }
 
     //In EditProfile todoRef is used fore store the data in the database firestore;
-    const todoRef = firebase.firestore().collection('user.email').doc('KCLuscJDktImEj6m1qqg');
+    const todoRef = firebase.firestore().collection('user').doc('email');
     //name
     const [name, setName] = useState();
     //phone
