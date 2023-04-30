@@ -11,8 +11,9 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
-
+import {isValidEmail} from 'email-validator'
 import auth, { firebase } from "@react-native-firebase/auth";
+import { combineTransition } from "react-native-reanimated";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -31,6 +32,9 @@ const LoginScreen = ({ navigation }) => {
       alert("Please fill Password");
       return;
     }
+
+   
+
     auth()
       .signInWithEmailAndPassword(userEmail, userPassword)
       .then((user) => {
@@ -38,6 +42,7 @@ const LoginScreen = ({ navigation }) => {
         // If server response message same as Data Matched
         if (user) navigation.navigate('AppStack'),
         alert("Login Succesful")
+        console.log(user)
       })
       .catch((error) => {
         console.log(error);
