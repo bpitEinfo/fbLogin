@@ -38,9 +38,10 @@ import { FlatList } from "react-native-gesture-handler";
 const ProfileScreen = (navigation) => {
 
     //UseState hook is used to  create state variables for our component. State variables are used to store dynamic data in our component which can user interacts with it.
-    const [user, setUser] = useState([]);
     //User store data in todoRef variable
-    const todoRef = firebase.firestore().collection('user.email');
+    const user = firebase.auth().currentUser;
+
+    const todoRef = firebase.firestore().collection('Users').doc(user.email);
     const [users, setUsers] = useState('');
     //useEffect hook is used  to allow us to respond to cahnge in the component 
     //It is used  update data
@@ -48,52 +49,44 @@ const ProfileScreen = (navigation) => {
         const subscriber = auth().onAuthStateChanged((user) => {
             //  console.log("user", JSON.stringify(user));
             //store in user data
-            setUser(user);
+            // setUser(user);
         });
 
         // return subscriber;
     }, []);
+    firestore()
+        .collection('Users')
+        .get()
+        .then(querySnapshot => {
+            //  console.log('Total users: ', querySnapshot.size);
+            const users = []
+            querySnapshot.forEach(documentSnapshot => {
+                const {
+                    name,
+                    enroll,
+                    father,
+                    phone,
+                    section,
+                    caption,
+                    address
+                } = documentSnapshot.data()
+                users.push({
+                    id: documentSnapshot.id,
+                    name,
+                    enroll,
+                    father,
+                    phone,
+                    section,
+                    caption,
+                    address
+                })
+
+            });
+            setUsers(users);
+
+        });
 
 
-
-    useEffect(() => {
-        (async () => {
-            todoRef
-                .onSnapshot(
-                    querySnapshot => {
-                        const users = []
-                        querySnapshot.forEach((doc) => {
-                            const {
-                                name,
-                                enroll,
-                                father,
-                                phone,
-                                section,
-                                caption,
-                                address
-                            } = doc.data()
-                            users.push({
-                                id: doc.id,
-                                name,
-                                enroll,
-                                father,
-                                phone,
-                                section,
-                                caption,
-                                address
-                            })
-                        })
-                        // console.log("users", JSON.stringify(users));
-
-                        setUsers(users);
-
-                    }
-                )
-        })();
-
-
-    }, []
-    );
 
 
     return (
@@ -109,16 +102,13 @@ const ProfileScreen = (navigation) => {
 
                     <View style={{ marginLeft: 20 }}>
 
-                        <Text style={{ marginTop: 10, marginLeft: 0, fontSize: 18, fontWeight: 'bold', color: "black" }}>{users.name}</Text>
-                        {user ? (
-                            <Text style={{ marginTop: 5, width: "100%", fontSize: 14, color: "black", flexDirection: 'row' }}>
-                                Welcome{" "}
-                                {/* Display email or name */}
-                                {user.displayName
-                                    ? user.name
-                                    : user.email}
-                            </Text>
-                        ) : null}
+                        <Text style={{ marginTop: 10, marginLeft: 0, fontSize: 18, fontWeight: 'bold', color: "black" }}>{ }</Text>
+
+                        <Text style={{ marginTop: 5, width: "100%", fontSize: 14, color: "black", flexDirection: 'row' }}>
+                            Welcome : {user.email}
+
+                        </Text>
+
                     </View>
                 </View>
             </View>

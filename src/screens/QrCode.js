@@ -51,48 +51,43 @@ const App = ({navigation}) => {
     });
   };
   ///
+  const user = firebase.auth().currentUser;
 
   const [users, setUsers] = useState('');
-  const todoRef = firebase.firestore().collection('user.email');
+  const todoRef = firebase.firestore().collection('Users').doc(user.email);
 
-  useEffect(() => {
-    (async () => {
-      todoRef
-        .onSnapshot(
-          querySnapshot => {
+    firestore()
+        .collection('Users')
+        .get()
+        .then(querySnapshot => {
+          //  console.log('Total users: ', querySnapshot.size);
             const users = []
-            querySnapshot.forEach((doc) => {
-              const {
-                name,
-                enroll,
-                father,
-                phone,
-                section,
-                caption,
-                address
-              } = doc.data()
-              users.push({
-                id: doc.id,
-                name,
-                enroll,
-                father,
-                phone,
-                section,
-                caption,
-                address
-              })
-            })
-           // console.log("users", JSON.stringify(users));
 
-            setUsers(users);
+            querySnapshot.forEach(documentSnapshot => {
+                const {
+                    name,
+                    enroll,
+                    father,
+                    phone,
+                    section,
+                    caption,
+                    address
+                } = documentSnapshot.data()
+                users.push({
+                    id: documentSnapshot.id,
+                    name,
+                    enroll,
+                    father,
+                    phone,
+                    section,
+                    caption,
+                    address
+                })
 
-          }
-        )
-    })();
+            });
+              setUsers(users);
 
-
-  }, []
-  );
+        });
 
 
   const initialItemState = {

@@ -62,7 +62,7 @@ const RegisterScreen = ({ navigation }) => {
         );
         console.log(user);
         if (user) {
-          firestore().collection(user.user.email).doc(user.user.uid).set({
+          firestore().collection('Users').doc(user.user.email).set({
             name: userName,
             email: userEmail,
             phone: addPhone,
