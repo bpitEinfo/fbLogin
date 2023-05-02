@@ -34,17 +34,17 @@ import firebase from '@react-native-firebase/app';
 const EditProfileScreen = () => {
 
     //UseState hook is used to  create state variables for our component. State variables are used to store dynamic data in our component which can user interacts with it.
-    const [user, setUser] = useState();
+   // const [user, setUser] = useState();
     //useEffect hook is used  to allow us to respond to cahnge in the component 
     //It is used  update data
-    useEffect(() => {
-        const subscriber = auth().onAuthStateChanged((user) => {
-            // console.log("user", JSON.stringify(user));
-            setUser(user);
-        });
+    // useEffect(() => {
+    //     const subscriber = auth().onAuthStateChanged((user) => {
+    //         // console.log("user", JSON.stringify(user));
+    //         setUser(user);
+    //     });
 
-        return subscriber;
-    }, []);
+    //     return subscriber;
+    // }, []);
     const [image, setImage] = useState(null);
 
     const takePhotoFromCamera = () => {
@@ -57,9 +57,10 @@ const EditProfileScreen = () => {
         });
 
     }
+const user = firebase.auth().currentUser;
 
     //In EditProfile todoRef is used fore store the data in the database firestore;
-    const todoRef = firebase.firestore().collection('user').doc('email');
+    const todoRef = firebase.firestore().collection(user.email).doc(user.uid);
     //name
     const [name, setName] = useState();
     //phone

@@ -12,16 +12,34 @@ import {
   ScrollView,
 } from "react-native";
 
+//fire base module.
 import auth from "@react-native-firebase/auth";
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import firebase from '@react-native-firebase/app';
 
 const RegisterScreen = ({ navigation }) => {
+  //User NAme
+  const [userName, setUserName] = useState("");
+  //phone
+  const [addPhone, setAddPhone] = useState('');
+  //Enroll
+  const [addenroll, setAddEnroll] = useState("");
+  //AddSection
+  const [addsection, setAddSection] = useState("");
+  //AddFather
+  const [addfather, setAddFather] = useState("");
+  //Addaddress
+  const [addaddress, setAddAddress] = useState("");
+  //Add Caption
+  const [addcaption, setAddCaption] = useState("");
   //User Email
   const [userEmail, setUserEmail] = useState("");
   //User Pass
   const [userPassword, setUserPassword] = useState("");
   //Errror
   const [errortext, setErrortext] = useState("");
-
+  const userNameInputRef = createRef();
   const emailInputRef = createRef();
   const passwordInputRef = createRef();
 
@@ -33,7 +51,8 @@ const RegisterScreen = ({ navigation }) => {
     auth()
       .createUserWithEmailAndPassword(
         userEmail,
-        userPassword
+        userPassword,
+
       )
       .then((user) => {
         user.user.sendEmailVerification()
@@ -43,13 +62,21 @@ const RegisterScreen = ({ navigation }) => {
         );
         console.log(user);
         if (user) {
-          auth()
-            
-            .then(() => navigation.navigate("Appstack"))
-            .catch((error) => {
-              alert(error);
-              console.error(error);
-            });
+          firestore().collection(user.user.email).doc(user.user.uid).set({
+            name: userName,
+            email: userEmail,
+            phone: addPhone,
+            enroll: addenroll,
+                section: addsection,
+                father: addfather,
+                address: addaddress,
+          }).then(() => {
+            console.log('User Added')
+
+          }).catch((error) => {
+            alert(error);
+            //   console.error(error);
+          });
         }
       })
       .catch((error) => {
@@ -62,11 +89,14 @@ const RegisterScreen = ({ navigation }) => {
           setErrortext(error.message);
         }
       });
+
+
+
   };
 
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: "black" ,paddingTop:150}}
+      style={{ flex: 1, backgroundColor: "black", paddingTop: 0 }}
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -82,17 +112,126 @@ const RegisterScreen = ({ navigation }) => {
               width: "50%",
               height: 100,
               resizeMode: "contain",
-              margin: 30,
+              margin: 0,
             }}
           />
         </View>
         <KeyboardAvoidingView enabled>
-          
           <View style={styles.sectionStyle}>
             <TextInput
               style={styles.inputStyle}
-              onChangeText={(UserEmail) =>
-                setUserEmail(UserEmail)
+              onChangeText={(userName) =>
+                setUserName(userName)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="User Name"
+              placeholderTextColor="#8b9cb5"
+              ref={userNameInputRef}
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current &&
+                passwordInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+
+
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(phone) =>
+                setAddPhone(phone)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="Phone Number"
+              placeholderTextColor="#8b9cb5"
+              ref={userNameInputRef}
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current &&
+                passwordInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(enroll) =>
+                setAddEnroll(enroll)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="Enrollment Number"
+              placeholderTextColor="#8b9cb5"
+              ref={userNameInputRef}
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current &&
+                passwordInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(section) =>
+                setAddSection(section)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="134-CSE-B-19"
+              placeholderTextColor="#8b9cb5"
+              ref={userNameInputRef}
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current &&
+                passwordInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(father) =>
+                setAddFather(father)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="Father Name"
+              placeholderTextColor="#8b9cb5"
+              ref={userNameInputRef}
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current &&
+                passwordInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(addaddress) =>
+                setAddAddress(addaddress)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="Address"
+              placeholderTextColor="#8b9cb5"
+              ref={userNameInputRef}
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current &&
+                passwordInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(userEmail) =>
+                setUserEmail(userEmail)
               }
               underlineColorAndroid="#f000"
               placeholder="Enter Email"
@@ -133,7 +272,7 @@ const RegisterScreen = ({ navigation }) => {
             style={styles.buttonStyle}
             activeOpacity={0.5}
             onPress={handleSubmitButton}
-            
+
           >
             <Text style={styles.buttonTextStyle}>
               REGISTER
